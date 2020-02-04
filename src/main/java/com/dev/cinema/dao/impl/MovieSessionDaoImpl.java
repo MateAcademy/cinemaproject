@@ -3,9 +3,9 @@ package com.dev.cinema.dao.impl;
 import com.dev.cinema.dao.MovieSessionDao;
 import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Dao;
-import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.util.HibernateUtil;
+import lombok.NonNull;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -26,7 +26,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     private static final Logger LOGGER = Logger.getLogger(MovieSessionDaoImpl.class);
 
     @Override
-    public MovieSession add(MovieSession movieSession) {
+    public MovieSession add(@NonNull MovieSession movieSession) {
         Transaction transaction = null;
         try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -44,7 +44,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate showTime)
+    public List<MovieSession> findAvailableSessions(@NonNull Long movieId,@NonNull LocalDate showTime)
             throws DataProcessingException {
         try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.get(MovieSession.class, movieId);
