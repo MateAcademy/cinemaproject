@@ -1,4 +1,4 @@
-package com.dev.cinema.dao.hibernate;
+package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.MovieDao;
 import com.dev.cinema.exceptions.DataProcessingException;

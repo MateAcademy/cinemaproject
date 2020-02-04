@@ -8,6 +8,7 @@ import java.util.List;
  * @author Sergey Klunniy
  */
 public interface MovieService {
+
     Movie add(Movie movie);
 
     List<Movie> getAll();
