@@ -44,10 +44,6 @@ public class CinemaHallDaoImpl implements CinemHallDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<CinemaHall> criteriaQuery = criteriaBuilder.createQuery(CinemaHall.class);
-
-//            String getAll = "from CinemaHall";
-//            List<CinemaHall> list = session.createQuery(getAll, CinemaHall.class).list();
-//            return list;
             criteriaQuery.from(CinemaHall.class);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
