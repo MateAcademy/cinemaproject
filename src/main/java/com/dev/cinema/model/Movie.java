@@ -4,11 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Sergey Klunniy
  */
 @Entity
+@Table(name = "movie")
 public class Movie {
 
     @Id
@@ -18,9 +20,6 @@ public class Movie {
     private String title;
 
     private String description;
-
-    public Movie() {
-    }
 
     public Long getId() {
         return id;
@@ -44,5 +43,13 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{"
+                + "id=" + id
+                + ", title='" + title + '\''
+                + ", description='" + description + '\'' + '}';
     }
 }

@@ -12,16 +12,13 @@ public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
 
     public static void main(String[] args) {
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-
-        movieService.getAll().forEach(System.out::println);
-
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
-        movie = movieService.add(movie);
+
+        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+        movieService.getAll().forEach(System.out::println);
+        movieService.add(movie);
 
         movieService.getAll().forEach(System.out::println);
-
-
     }
 }
