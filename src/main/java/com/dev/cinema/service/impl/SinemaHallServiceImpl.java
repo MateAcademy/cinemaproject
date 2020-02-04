@@ -20,7 +20,6 @@ public class SinemaHallServiceImpl implements CinemaHallService {
     private static CinemHallDao cinemHallDao;
     private static final Logger LOGGER = Logger.getLogger(SinemaHallServiceImpl.class);
 
-
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         return cinemHallDao.add(cinemaHall);
