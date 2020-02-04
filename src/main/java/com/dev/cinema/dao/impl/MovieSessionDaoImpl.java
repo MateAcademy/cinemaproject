@@ -28,7 +28,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             Long id = (Long) session.save(movieSession);
             transaction.commit();
@@ -46,7 +46,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate showTime)
             throws DataProcessingException {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.get(MovieSession.class, movieId);
 
             CriteriaBuilder cb = session.getCriteriaBuilder();

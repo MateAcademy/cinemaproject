@@ -23,7 +23,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             Long itemId = (Long)session.save(movie);
             transaction.commit();
@@ -41,7 +41,7 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
                     .createQuery(Movie.class);
             criteriaQuery.from(Movie.class);
