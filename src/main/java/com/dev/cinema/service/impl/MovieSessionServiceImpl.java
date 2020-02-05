@@ -6,7 +6,6 @@ import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.service.MovieSessionService;
-import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,8 +15,7 @@ import java.util.List;
  */
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
-    
-    private static final Logger LOGGER = Logger.getLogger(MovieSessionServiceImpl.class);
+
     
     @Inject
     private static MovieSessionDao movieSessionDao;
@@ -32,8 +30,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
         try {
             return movieSessionDao.findAvailableSessions(movieId, date);
         } catch (DataProcessingException e) {
-            LOGGER.error("Cannot show movie sessions from database", e);
-            throw new RuntimeException();
+            throw new RuntimeException("Cannot show movie sessions from database", e);
         }
     }
 }

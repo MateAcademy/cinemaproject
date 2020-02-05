@@ -6,7 +6,6 @@ import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.util.HibernateUtil;
 import lombok.NonNull;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -23,8 +22,6 @@ import java.util.List;
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
 
-    private static final Logger LOGGER = Logger.getLogger(MovieSessionDaoImpl.class);
-
     @Override
     public MovieSession add(@NonNull MovieSession movieSession) {
         Transaction transaction = null;
@@ -38,8 +35,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction == null) {
                 transaction.rollback();
             }
-            LOGGER.error("Cannot add movie session to database", e);
-            throw new RuntimeException();
+            throw new RuntimeException("Cannot add movie session to database", e);
         }
     }
 
@@ -55,10 +51,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Predicate predicateId = cb.equal(root.get("movie"), movieId);
             Predicate predicateDate = cb.between(root.get("showTime"),
                     showTime.atStartOfDay(), showTime.plusDays(1).atStartOfDay());
-            cq.select(root).where(cb.and(predicateId, predicateDate)); //+
+            cq.select(root).where(cb.and(predicateId, predicateDate));
             return session.createQuery(cq).getResultList();
         } catch (Exception e) {
-            LOGGER.error("Cannot show all movie sessions from database");
             throw new DataProcessingException("Cannot show all movie sessions from database", e);
         }
     }

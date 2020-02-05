@@ -5,8 +5,6 @@ import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.util.HibernateUtil;
-import lombok.NonNull;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -20,10 +18,8 @@ import java.util.List;
 @Dao
 public class CinemaHallDaoImpl implements CinemHallDao {
 
-    private static final Logger LOGGER = Logger.getLogger(CinemaHallDaoImpl.class);
-
     @Override
-    public CinemaHall add(@NonNull CinemaHall cinemaHall) {
+    public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
         try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -35,8 +31,7 @@ public class CinemaHallDaoImpl implements CinemHallDao {
             if (transaction == null) {
                 transaction.rollback();
             }
-            LOGGER.error("Cannot add cinema hall to database", e);
-            throw new RuntimeException();
+            throw new RuntimeException("Cannot add cinema hall to database", e);
         }
     }
 
@@ -48,7 +43,6 @@ public class CinemaHallDaoImpl implements CinemHallDao {
             criteriaQuery.from(CinemaHall.class);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            LOGGER.error("Cannot show all cinema halls from database");
             throw new DataProcessingException("Cannot show all cinema halls from database", e);
         }
     }

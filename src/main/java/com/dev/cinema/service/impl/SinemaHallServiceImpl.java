@@ -6,7 +6,6 @@ import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.service.CinemaHallService;
-import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -18,7 +17,6 @@ public class SinemaHallServiceImpl implements CinemaHallService {
 
     @Inject
     private static CinemHallDao cinemHallDao;
-    private static final Logger LOGGER = Logger.getLogger(SinemaHallServiceImpl.class);
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
@@ -30,8 +28,7 @@ public class SinemaHallServiceImpl implements CinemaHallService {
         try {
             return cinemHallDao.getAll();
         } catch (DataProcessingException e) {
-            LOGGER.error("Cannot show cinema halls from database", e);
-            throw new RuntimeException();
+            throw new RuntimeException("Cannot show cinema halls from database", e);
         }
     }
 }
