@@ -55,7 +55,6 @@ public class Injector {
         if (newInstanceOfClass == null) {
             return getNewInstance(clazz);
         }
-
         return newInstanceOfClass;
     }
 
