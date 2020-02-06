@@ -20,9 +20,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User login(String email, String password) throws AuthenticationException {
         User user = userService.findByEmail(email);
-
-        if (user.getPassword().equals(HashUtil.hashPassword(password, user.getSalt()))) {
-            return user;
+        if (user != null) {
+            if (user.getPassword().equals(HashUtil.hashPassword(password, user.getSalt()))) {
+                return user;
+            }
         }
         throw new AuthenticationException("login or password incorrect");
     }
@@ -31,9 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public User register(String email, String password) {
         User user = new User();
         user.setEmail(email);
-        byte[] solt = HashUtil.getSalt();
-        user.setSalt(solt);
-        user.setPassword(HashUtil.hashPassword(password, solt));
-        return user;
+        user.setPassword(password);
+        return userService.add(user);
     }
 }
