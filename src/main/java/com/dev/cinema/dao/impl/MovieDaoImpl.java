@@ -35,7 +35,6 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            LOGGER.error("Can't save user", e);
             throw new RuntimeException("can't insert Movie entity", e);
         }
     }
@@ -49,7 +48,6 @@ public class MovieDaoImpl implements MovieDao {
             LOGGER.info("we getAll movies");
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            LOGGER.error("Can't save user", e);
             throw new DataProcessingException("Error retrieving all movies", e);
         }
     }

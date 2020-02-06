@@ -1,12 +1,17 @@
 package com.dev.cinema;
 
+import com.dev.cinema.dao.UserDao;
+import com.dev.cinema.dao.impl.UserDaoImpl;
 import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.User;
+import com.dev.cinema.service.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.impl.AuthenticationServiceImpl;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +24,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+        MovieService movieService =
+                (MovieService) injector.getInstance(MovieService.class);
         Movie movie = new Movie();
         movie.setTitle("Family instant");
         movie.setDescription("new film 2020");
@@ -43,5 +49,18 @@ public class Main {
                 showTime.toLocalDate()).forEach(System.out::println);
 
         System.out.println(cinemaHall);
+
+        User user = new User( "Sergey", "123",  "mate@gmail.com");
+
+        AuthenticationService au = new AuthenticationServiceImpl();
+        User user1 = au.register(user.getEmail(), user.getPassword());
+
+        user.setSalt(user1.getSalt());
+        user.setPassword(user1.getPassword());
+        UserDao userDao = new UserDaoImpl();
+        userDao.add(user);
+
+        User user2 = userDao.findByEmail("mate@gmail.com");
+        System.out.println(user2);
     }
 }
