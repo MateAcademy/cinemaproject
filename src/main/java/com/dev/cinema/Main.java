@@ -62,6 +62,5 @@ public class Main {
 
         User user2 = userDao.findByEmail("mate@gmail.com");
         System.out.println(user2);
-
     }
 }

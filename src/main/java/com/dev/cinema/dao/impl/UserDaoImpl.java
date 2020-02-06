@@ -51,6 +51,5 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             throw new RuntimeException("Can't find user by email" + e);
         }
-
     }
 }
