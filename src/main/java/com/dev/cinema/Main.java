@@ -2,7 +2,11 @@ package com.dev.cinema;
 
 import com.dev.cinema.exceptions.AuthenticationException;
 import com.dev.cinema.lib.Injector;
-import com.dev.cinema.model.*;
+import com.dev.cinema.model.CinemaHall;
+import com.dev.cinema.model.Movie;
+import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.ShoppingCart;
+import com.dev.cinema.model.User;
 import com.dev.cinema.service.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
@@ -43,14 +47,14 @@ public class Main {
         LocalDateTime showTime = LocalDateTime.of(2020, 02, 07, 10, 00);
         movieSession.setShowTime(showTime);
         movieSessionService.add(movieSession);
-//        movieSessionService.findAvailableSessions(1L,
-//                showTime.toLocalDate()).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(1L,
+                showTime.toLocalDate()).forEach(System.out::println);
 
         System.out.println(cinemaHall);
 
         List<MovieSession> availableSessions = movieSessionService
                 .findAvailableSessions(movie.getId(), LocalDate.now());
-//        availableSessions.forEach(System.out::println);
+        availableSessions.forEach(System.out::println);
 
         AuthenticationService authenticationService = (AuthenticationService)
                 injector.getInstance(AuthenticationService.class);
