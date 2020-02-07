@@ -31,10 +31,10 @@ public class MovieSession {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     private Movie movie;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     private CinemaHall cinemaHall;
 
     private LocalDateTime showTime;

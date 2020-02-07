@@ -41,7 +41,7 @@ public class ShoppingCart {
     private List<Ticket> tickets;
 
     @MapsId
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "id")
     private User user;
 }

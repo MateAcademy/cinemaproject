@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
  * @author Sergey Klunniy
  */
 @Data
-@Entity
 @ToString
+@Entity
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,5 +42,6 @@ public class Ticket {
     private User user;
 
     private LocalDateTime showTime;
+
 
 }
