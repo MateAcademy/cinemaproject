@@ -37,7 +37,7 @@ public class ShoppingCart {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Ticket> tickets;
 
     @MapsId

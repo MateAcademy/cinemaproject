@@ -1,14 +1,17 @@
 package com.dev.cinema;
 
-import com.dev.cinema.dao.UserDao;
-import com.dev.cinema.dao.impl.UserDaoImpl;
 import com.dev.cinema.exceptions.AuthenticationException;
-import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Injector;
-import com.dev.cinema.lib.Service;
-import com.dev.cinema.model.*;
-import com.dev.cinema.service.*;
-import com.dev.cinema.service.impl.AuthenticationServiceImpl;
+import com.dev.cinema.model.CinemaHall;
+import com.dev.cinema.model.Movie;
+import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.ShoppingCart;
+import com.dev.cinema.model.User;
+import com.dev.cinema.service.AuthenticationService;
+import com.dev.cinema.service.CinemaHallService;
+import com.dev.cinema.service.MovieService;
+import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.ShoppingCartService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -53,9 +56,6 @@ public class Main {
                 .findAvailableSessions(movie.getId(), LocalDate.now());
         availableSessions.forEach(System.out::println);
 
-        //User selects the session and processing the order
-
-        //Before this we need to register the user
         AuthenticationService authenticationService = (AuthenticationService)
                 injector.getInstance(AuthenticationService.class);
         authenticationService.register("sergey@gmail.com", "password");
@@ -70,7 +70,5 @@ public class Main {
         ShoppingCart userBucket = busketService.getByUser(user);
         System.out.println(userBucket);
 
-//        User user2 = authenticationService.register("i@i.ua", "pass");
-//        busketService.registerNewShoppingCart(user2);
     }
 }
