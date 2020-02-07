@@ -2,18 +2,17 @@ package com.dev.cinema;
 
 import com.dev.cinema.dao.UserDao;
 import com.dev.cinema.dao.impl.UserDaoImpl;
+import com.dev.cinema.exceptions.AuthenticationException;
+import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Injector;
-import com.dev.cinema.model.CinemaHall;
-import com.dev.cinema.model.Movie;
-import com.dev.cinema.model.MovieSession;
-import com.dev.cinema.model.User;
-import com.dev.cinema.service.AuthenticationService;
-import com.dev.cinema.service.CinemaHallService;
-import com.dev.cinema.service.MovieService;
-import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.lib.Service;
+import com.dev.cinema.model.*;
+import com.dev.cinema.service.*;
 import com.dev.cinema.service.impl.AuthenticationServiceImpl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Sergey Klunniy
@@ -22,7 +21,7 @@ public class Main {
 
     private static Injector injector = Injector.getInstance("com.dev.cinema");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
 
         MovieService movieService =
                 (MovieService) injector.getInstance(MovieService.class);
@@ -42,7 +41,7 @@ public class Main {
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setMovie(movie);
-        LocalDateTime showTime = LocalDateTime.of(2020, 02, 05, 18, 00);
+        LocalDateTime showTime = LocalDateTime.of(2020, 02, 07, 10, 00);
         movieSession.setShowTime(showTime);
         movieSessionService.add(movieSession);
         movieSessionService.findAvailableSessions(1L,
@@ -50,17 +49,28 @@ public class Main {
 
         System.out.println(cinemaHall);
 
-        User user = new User( "Sergey", "123",  "mate@gmail.com");
+        List<MovieSession> availableSessions = movieSessionService
+                .findAvailableSessions(movie.getId(), LocalDate.now());
+        availableSessions.forEach(System.out::println);
 
-        AuthenticationService au = new AuthenticationServiceImpl();
-        User user1 = au.register(user.getEmail(), user.getPassword());
+        //User selects the session and processing the order
 
-        user.setSalt(user1.getSalt());
-        user.setPassword(user1.getPassword());
-        UserDao userDao = new UserDaoImpl();
-        userDao.add(user);
+        //Before this we need to register the user
+        AuthenticationService authenticationService = (AuthenticationService)
+                injector.getInstance(AuthenticationService.class);
+        authenticationService.register("sergey@gmail.com", "password");
 
-        User user2 = userDao.findByEmail("mate@gmail.com");
-        System.out.println(user2);
+        User user = authenticationService.login("sergey@gmail.com", "password");
+
+        ShoppingCartService busketService = (ShoppingCartService)
+                injector.getInstance(ShoppingCartService.class);
+
+        MovieSession selectedMovieSession = availableSessions.get(0);
+        busketService.addSession(selectedMovieSession, user);
+        ShoppingCart userBucket = busketService.getByUser(user);
+        System.out.println(userBucket);
+
+//        User user2 = authenticationService.register("i@i.ua", "pass");
+//        busketService.registerNewShoppingCart(user2);
     }
 }

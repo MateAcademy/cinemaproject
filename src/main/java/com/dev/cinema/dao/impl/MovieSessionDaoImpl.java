@@ -43,7 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(@NonNull Long movieId,@NonNull LocalDate showTime)
             throws DataProcessingException {
         try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.get(MovieSession.class, movieId);
+//            session.get(MovieSession.class, movieId);
 
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<MovieSession> cq = cb.createQuery(MovieSession.class);
