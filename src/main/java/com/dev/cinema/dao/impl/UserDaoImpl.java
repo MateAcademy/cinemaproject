@@ -1,7 +1,7 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.UserDao;
-import com.dev.cinema.exceptions.AuthenticationException;
+import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.User;
 import com.dev.cinema.util.HibernateUtil;
 import org.apache.log4j.Logger;
@@ -10,12 +10,12 @@ import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
  * @author Sergey Klunniy
  */
+@Dao
 public class UserDaoImpl implements UserDao {
 
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);

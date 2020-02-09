@@ -5,6 +5,7 @@ import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.AuthenticationService;
+import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.util.HashUtil;
 
@@ -14,6 +15,8 @@ import com.dev.cinema.util.HashUtil;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
+    @Inject
+    private static ShoppingCartService shoppingCartService;
     @Inject
     private static UserService userService;
 
@@ -33,6 +36,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
-        return userService.add(user);
+        User userFromDb = userService.add(user);
+        shoppingCartService.registerNewShoppingCart(userFromDb);
+        return userFromDb;
     }
 }
