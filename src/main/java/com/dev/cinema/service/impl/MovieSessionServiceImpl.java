@@ -17,7 +17,7 @@ import java.util.List;
 public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Inject
-    private static MovieSessionDao movieSessionDao;
+    private MovieSessionDao movieSessionDao;
     
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -29,7 +29,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
         try {
             return movieSessionDao.findAvailableSessions(movieId, date);
         } catch (DataProcessingException e) {
-            throw new RuntimeException("Cannot show movie sessions from database", e);
+            throw new RuntimeException("Can't show movie sessions from database", e);
         }
     }
 }

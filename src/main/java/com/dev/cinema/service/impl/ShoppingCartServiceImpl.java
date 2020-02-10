@@ -10,6 +10,8 @@ import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
 
+import java.util.ArrayList;
+
 /**
  * @author Sergey Klunniy
  */
@@ -17,9 +19,10 @@ import com.dev.cinema.service.ShoppingCartService;
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Inject
-    private static ShoppingCartDao shoppingCartDao;
+    private ShoppingCartDao shoppingCartDao;
+
     @Inject
-    private static TicketDao ticketDao;
+    private TicketDao ticketDao;
 
     @Override
     public void addSession(MovieSession session, User user) {
@@ -44,5 +47,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
         shoppingCartDao.add(shoppingCart);
+    }
+
+    @Override
+    public void clear(ShoppingCart shoppingCart) {
+        shoppingCart.setTickets(new ArrayList<Ticket>());
+        shoppingCartDao.update(shoppingCart);
     }
 }

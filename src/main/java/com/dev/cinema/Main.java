@@ -25,42 +25,47 @@ public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
 
     public static void main(String[] args) throws AuthenticationException {
-
+//добавили фильм
         MovieService movieService =
                 (MovieService) injector.getInstance(MovieService.class);
         Movie movie = new Movie();
         movie.setTitle("Family instant");
         movie.setDescription("new film 2020");
         movie = movieService.add(movie);
-
+//добавили кинозал (CinemaHall)
         CinemaHallService cinemaHallService =
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(50);
         cinemaHall = cinemaHallService.add(cinemaHall);
 
+//добавили сеанс фильма: фильм в кинозале (MovieSession)
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setMovie(movie);
-        LocalDateTime showTime = LocalDateTime.of(2020, 02, 07, 10, 00);
+        LocalDateTime showTime = LocalDateTime.of(2020, 02, 10, 10, 00);
         movieSession.setShowTime(showTime);
         movieSessionService.add(movieSession);
-        movieSessionService.findAvailableSessions(1L,
-                showTime.toLocalDate()).forEach(System.out::println);
+//Todo: что это делает
+//        movieSessionService.findAvailableSessions(1L,
+//                showTime.toLocalDate()).forEach(System.out::println);
 
-        System.out.println(cinemaHall);
+//        System.out.println(cinemaHall);
 
+//выводим список сеансов фильмов:
         List<MovieSession> availableSessions = movieSessionService
-                .findAvailableSessions(movie.getId(), LocalDate.now());
+                .findAvailableSessions(movie.getId(), showTime.toLocalDate());
         availableSessions.forEach(System.out::println);
 
+//регестрируем юзера
         AuthenticationService authenticationService = (AuthenticationService)
                 injector.getInstance(AuthenticationService.class);
         authenticationService.register("sergey@gmail.com", "password");
 
         User user = authenticationService.login("sergey@gmail.com", "password");
+
 
         ShoppingCartService busketService = (ShoppingCartService)
                 injector.getInstance(ShoppingCartService.class);
