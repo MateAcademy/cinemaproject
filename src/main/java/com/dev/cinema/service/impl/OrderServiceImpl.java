@@ -17,11 +17,12 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     @Inject
-    private static OrderDao orderDao;
+    private OrderDao orderDao;
 
     @Override
     public Order completeOrder(List<Ticket> tickets, User user) {
-        return orderDao.completeOrder(tickets, user);
+        Order order = new Order(tickets, user);
+        return orderDao.create(order);
     }
 
     @Override

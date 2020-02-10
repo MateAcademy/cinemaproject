@@ -64,19 +64,4 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             throw new DataProcessingException("can't insert Shopping entity", e);
         }
     }
-
-    @Override
-    public void clear(ShoppingCart shoppingCart) {
-        Transaction transaction = null;
-        try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.delete(shoppingCart);
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("can't clear Shopping entity", e);
-        }
-    }
 }

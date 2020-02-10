@@ -13,7 +13,6 @@ import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.ShoppingCartService;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -44,23 +43,27 @@ public class Main {
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setMovie(movie);
-        LocalDateTime showTime = LocalDateTime.of(2020, 02, 07, 10, 00);
+        LocalDateTime showTime = LocalDateTime.of(2020, 02, 10, 10, 00);
         movieSession.setShowTime(showTime);
         movieSessionService.add(movieSession);
+
         movieSessionService.findAvailableSessions(1L,
                 showTime.toLocalDate()).forEach(System.out::println);
 
         System.out.println(cinemaHall);
 
+
         List<MovieSession> availableSessions = movieSessionService
-                .findAvailableSessions(movie.getId(), LocalDate.now());
+                .findAvailableSessions(movie.getId(), showTime.toLocalDate());
         availableSessions.forEach(System.out::println);
+
 
         AuthenticationService authenticationService = (AuthenticationService)
                 injector.getInstance(AuthenticationService.class);
         authenticationService.register("sergey@gmail.com", "password");
 
         User user = authenticationService.login("sergey@gmail.com", "password");
+
 
         ShoppingCartService busketService = (ShoppingCartService)
                 injector.getInstance(ShoppingCartService.class);

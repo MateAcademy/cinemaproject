@@ -10,7 +10,7 @@ import java.util.List;
  * @author Sergey Klunniy
  */
 public interface OrderDao {
-    Order completeOrder(List<Ticket> tickets, User user);
+    Order create(Order order);
 
     List<Order> getOrderHistory(User user);
 }
