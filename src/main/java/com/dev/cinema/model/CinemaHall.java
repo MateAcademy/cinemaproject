@@ -26,7 +26,7 @@ import javax.persistence.Table;
 public class CinemaHall {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.)
     @Column(name = "id")
     private Long id;
 

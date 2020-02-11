@@ -25,7 +25,6 @@ public class UserDaoImpl implements UserDao {
         Transaction transaction = null;
         try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-
             Long itemId = (Long) session.save(user);
             transaction.commit();
             user.setId(itemId);
