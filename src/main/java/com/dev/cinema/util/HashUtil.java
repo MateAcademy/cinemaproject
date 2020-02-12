@@ -1,10 +1,10 @@
 package com.dev.cinema.util;
 
-import org.apache.log4j.Logger;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+
+import org.apache.log4j.Logger;
 
 /**
  * @author Sergey Klunniy

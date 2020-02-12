@@ -5,13 +5,13 @@ import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.util.HibernateUtil;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaQuery;
 import lombok.NonNull;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import javax.persistence.criteria.CriteriaQuery;
-import java.util.List;
 
 /**
  * @author Sergey Klunniy

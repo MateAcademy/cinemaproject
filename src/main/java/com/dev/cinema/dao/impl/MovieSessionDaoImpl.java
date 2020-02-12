@@ -5,16 +5,17 @@ import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.util.HibernateUtil;
-import lombok.NonNull;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.time.LocalDate;
-import java.util.List;
+
+import lombok.NonNull;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * @author Sergey Klunniy
@@ -40,7 +41,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(@NonNull Long movieId,@NonNull LocalDate showTime)
+    public List<MovieSession> findAvailableSessions(
+            @NonNull Long movieId,@NonNull LocalDate showTime)
             throws DataProcessingException {
         try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();

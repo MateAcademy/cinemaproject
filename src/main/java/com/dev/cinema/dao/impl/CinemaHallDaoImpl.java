@@ -5,12 +5,11 @@ import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
+import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * @author Sergey Klunniy

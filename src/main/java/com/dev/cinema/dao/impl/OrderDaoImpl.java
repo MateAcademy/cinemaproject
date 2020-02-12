@@ -1,18 +1,25 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.OrderDao;
+import com.dev.cinema.exceptions.DataProcessingException;
+import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.Order;
 import com.dev.cinema.model.User;
 import com.dev.cinema.util.HibernateUtil;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-
-import java.util.List;
 
 /**
  * @author Sergey Klunniy
  */
+@Dao
 public class OrderDaoImpl implements OrderDao {
 
     @Override
@@ -34,14 +41,16 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getOrderHistory(User user) {
-        try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Order> query = session.createQuery("from Order where user =:user");
-            query.setMaxResults(10);
-            query.setParameter("user", user);
-            List<Order> list = query.list();
-            return list;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Order> criteria = builder.createQuery(Order.class);
+            Root<Order> root = criteria.from(Order.class);
+            root.fetch("tickets", JoinType.LEFT);
+            criteria.select(root).where(builder.equal(root.get("user"), user));
+            return session.createQuery(criteria).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't getOrderHistory from database", e);
+            throw new DataProcessingException("Couldn't show orders of " + user, e);
         }
     }
 }
+
