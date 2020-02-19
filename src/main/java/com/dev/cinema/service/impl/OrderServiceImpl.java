@@ -1,7 +1,7 @@
 package com.dev.cinema.service.impl;
 
 import com.dev.cinema.dao.OrderDao;
-import com.dev.cinema.model.Orders;
+import com.dev.cinema.model.Order;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.OrderService;
@@ -21,14 +21,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Orders completeOrder(List<Ticket> tickets, User user) {
-        Orders orders = new Orders(tickets, user);
-        return orderDao.create(orders);
+    public Order completeOrder(List<Ticket> tickets, User user) {
+        Order order = new Order(tickets, user);
+        return orderDao.create(order);
     }
 
     @Override
     @Transactional
-    public List<Orders> getOrderHistory(User user) {
+    public List<Order> getOrderHistory(User user) {
         return orderDao.getOrderHistory(user);
     }
 }

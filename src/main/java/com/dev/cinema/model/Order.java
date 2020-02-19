@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders")
-public class Orders {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +38,7 @@ public class Orders {
 
     private LocalDateTime showTime;
 
-    public Orders(List<Ticket> tickets, User user) {
+    public Order(List<Ticket> tickets, User user) {
         this.tickets = tickets;
         this.user = user;
         showTime = LocalDateTime.now();

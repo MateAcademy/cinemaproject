@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.JstlView;
 public class ServletConfig {
 
     @Bean
-    public InternalResourceViewResolver resolver() {
+    public InternalResourceViewResolver getResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/WEB-INF/views/");
@@ -26,7 +26,7 @@ public class ServletConfig {
     }
 
     @Bean
-    public MessageSource messageSource() {
+    public MessageSource getMessageSource() {
         ResourceBundleMessageSource source = new ResourceBundleMessageSource();
         source.setBasename("messages");
         return source;
@@ -35,7 +35,7 @@ public class ServletConfig {
     @Bean
     public Validator getValidator() {
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.setValidationMessageSource(messageSource());
+        validator.setValidationMessageSource(getMessageSource());
         return validator;
     }
 }
