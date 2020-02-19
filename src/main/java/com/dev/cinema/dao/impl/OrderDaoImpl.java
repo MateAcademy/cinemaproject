@@ -2,7 +2,7 @@ package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.OrderDao;
 import com.dev.cinema.exceptions.DataProcessingException;
-import com.dev.cinema.model.Order;
+import com.dev.cinema.model.Orders;
 import com.dev.cinema.model.User;
 
 import java.util.List;
@@ -28,28 +28,28 @@ public class OrderDaoImpl implements OrderDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public Order create(Order order) {
+    public Orders create(Orders orders) {
         Transaction transaction = null;
         try (final Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            Long id = (Long) session.save(order);
+            Long id = (Long) session.save(orders);
             transaction.commit();
-            order.setId(id);
-            return order;
+            orders.setId(id);
+            return orders;
         } catch (Exception e) {
             if (transaction == null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cannot add order to database", e);
+            throw new RuntimeException("Cannot add orders to database", e);
         }
     }
 
     @Override
-    public List<Order> getOrderHistory(User user) {
+    public List<Orders> getOrderHistory(User user) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Order> criteria = builder.createQuery(Order.class);
-            Root<Order> root = criteria.from(Order.class);
+            CriteriaQuery<Orders> criteria = builder.createQuery(Orders.class);
+            Root<Orders> root = criteria.from(Orders.class);
             root.fetch("tickets", JoinType.LEFT);
             criteria.select(root).where(builder.equal(root.get("user"), user));
             return session.createQuery(criteria).getResultList();
@@ -58,4 +58,3 @@ public class OrderDaoImpl implements OrderDao {
         }
     }
 }
-

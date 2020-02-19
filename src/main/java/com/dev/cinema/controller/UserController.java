@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
 
-  @Autowired
-  private UserDao userDao;
+    @Autowired
+    private UserDao userDao;
 
-  @GetMapping("/")
-  public String getUserList(Model model) {
-    model.addAttribute("userModel", new User());
-    model.addAttribute("users", userDao.getUserList());
-    return "user";
-  }
+    @GetMapping("/")
+    public String getUserList(Model model) {
+        model.addAttribute("userModel", new User());
+        model.addAttribute("users", userDao.getUserList());
+        return "user";
+    }
 
-  @PostMapping("/save")
-  public String saveUser(@ModelAttribute("userModel") User user) {
-    userDao.add(user);
-    return "redirect:/";
-  }
+    @PostMapping("/save")
+    public String saveUser(@ModelAttribute("userModel") User user) {
+        userDao.add(user);
+        return "redirect:/";
+    }
 
 }

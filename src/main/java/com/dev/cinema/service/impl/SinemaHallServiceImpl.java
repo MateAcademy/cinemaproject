@@ -4,11 +4,9 @@ import com.dev.cinema.dao.CinemaHallDao;
 import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.service.CinemaHallService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author Sergey Klunniy
@@ -17,19 +15,17 @@ import java.util.List;
 public class SinemaHallServiceImpl implements CinemaHallService {
 
     @Autowired
-    private static CinemaHallDao cinemHallDao;
+    private CinemaHallDao cinemaHallDao;
 
     @Override
-    @Transactional
     public CinemaHall add(CinemaHall cinemaHall) {
-        return cinemHallDao.add(cinemaHall);
+        return cinemaHallDao.add(cinemaHall);
     }
 
     @Override
-    @Transactional
     public List<CinemaHall> getAll() {
         try {
-            return cinemHallDao.getAll();
+            return cinemaHallDao.getAll();
         } catch (DataProcessingException e) {
             throw new RuntimeException("Cannot show cinema halls from database", e);
         }

@@ -9,21 +9,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * @author Sergey Klunniy
  */
 @Data
 @Entity
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+@Table(name = "orders")
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +38,7 @@ public class Order {
 
     private LocalDateTime showTime;
 
-    public Order(List<Ticket> tickets, User user) {
+    public Orders(List<Ticket> tickets, User user) {
         this.tickets = tickets;
         this.user = user;
         showTime = LocalDateTime.now();

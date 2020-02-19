@@ -1,15 +1,14 @@
 package com.dev.cinema.service.impl;
 
 import com.dev.cinema.dao.OrderDao;
-import com.dev.cinema.model.Order;
+import com.dev.cinema.model.Orders;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.OrderService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author Sergey Klunniy
@@ -22,14 +21,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order completeOrder(List<Ticket> tickets, User user) {
-        Order order = new Order(tickets, user);
-        return orderDao.create(order);
+    public Orders completeOrder(List<Ticket> tickets, User user) {
+        Orders orders = new Orders(tickets, user);
+        return orderDao.create(orders);
     }
 
     @Override
     @Transactional
-    public List<Order> getOrderHistory(User user) {
+    public List<Orders> getOrderHistory(User user) {
         return orderDao.getOrderHistory(user);
     }
 }

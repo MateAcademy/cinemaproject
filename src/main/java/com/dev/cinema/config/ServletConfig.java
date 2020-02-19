@@ -16,27 +16,26 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = {"com.dev.cinema.controller"})
 public class ServletConfig {
 
-  @Bean
-  public InternalResourceViewResolver resolver() {
-    InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-    viewResolver.setViewClass(JstlView.class);
-    viewResolver.setPrefix("/WEB-INF/views/");
-    viewResolver.setSuffix(".jsp");
-    return viewResolver;
-  }
+    @Bean
+    public InternalResourceViewResolver resolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setViewClass(JstlView.class);
+        viewResolver.setPrefix("/WEB-INF/views/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
+    }
 
-  @Bean
-  public MessageSource messageSource() {
-    ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-    source.setBasename("messages");
-    return source;
-  }
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+        source.setBasename("messages");
+        return source;
+    }
 
-  @Bean
-  public Validator getValidator() {
-    LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-    validator.setValidationMessageSource(messageSource());
-    return validator;
-  }
-
+    @Bean
+    public Validator getValidator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.setValidationMessageSource(messageSource());
+        return validator;
+    }
 }

@@ -1,6 +1,6 @@
 package com.dev.cinema.dao;
 
-import com.dev.cinema.model.Order;
+import com.dev.cinema.model.Orders;
 import com.dev.cinema.model.User;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author Sergey Klunniy
  */
 public interface OrderDao {
-    Order create(Order order);
+    Orders create(Orders orders);
 
-    List<Order> getOrderHistory(User user);
+    List<Orders> getOrderHistory(User user);
 }
