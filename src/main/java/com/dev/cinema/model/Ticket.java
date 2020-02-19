@@ -11,20 +11,16 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * @author Sergey Klunniy
  */
 @Data
-@ToString
 @Entity
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ticket")
+@Table(name = "tickets")
 public class Ticket {
 
     @Id

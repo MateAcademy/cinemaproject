@@ -9,17 +9,14 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.hibernate.validator.constraints.Email;
 
 /**
  * @author Sergey Klunniy
  */
 @Data
 @Entity
-@ToString
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
@@ -29,9 +26,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(unique = true)
+
+    @Column(name = "email", unique = true)
+    @Email(message = "{user.email.invalid}")
     private String email;
+
+    @Column(name = "password")  //@Size(max = 100, min = 3, message = "{user.password.invalid}")
     private String password;
+
     private byte[] salt;
 
 }

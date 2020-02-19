@@ -2,15 +2,16 @@ package com.dev.cinema.service.impl;
 
 import com.dev.cinema.dao.ShoppingCartDao;
 import com.dev.cinema.dao.TicketDao;
-import com.dev.cinema.lib.Inject;
-import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
-
 import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Sergey Klunniy
@@ -18,13 +19,14 @@ import java.util.ArrayList;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
-    @Inject
+    @Autowired
     private ShoppingCartDao shoppingCartDao;
 
-    @Inject
+    @Autowired
     private TicketDao ticketDao;
 
     @Override
+    @Transactional
     public void addSession(MovieSession session, User user) {
         Ticket ticket = new Ticket();
         ticket.setCinemaHall(session.getCinemaHall());
@@ -38,11 +40,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional
     public ShoppingCart getByUser(User user) {
         return shoppingCartDao.getByUser(user);
     }
 
     @Override
+    @Transactional
     public void registerNewShoppingCart(User user) {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
@@ -50,8 +54,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional
     public void clear(ShoppingCart shoppingCart) {
         shoppingCart.setTickets(new ArrayList<Ticket>());
         shoppingCartDao.update(shoppingCart);
     }
+
 }

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author Sergey Klunniy
  */
-public interface CinemHallDao {
+public interface CinemaHallDao {
 
     CinemaHall add(CinemaHall cinemaHall);
 

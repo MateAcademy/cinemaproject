@@ -1,13 +1,12 @@
 package com.dev.cinema.service.impl;
 
-import com.dev.cinema.dao.CinemHallDao;
+import com.dev.cinema.dao.CinemaHallDao;
 import com.dev.cinema.exceptions.DataProcessingException;
-import com.dev.cinema.lib.Inject;
-import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.service.CinemaHallService;
-
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Sergey Klunniy
@@ -15,20 +14,21 @@ import java.util.List;
 @Service
 public class SinemaHallServiceImpl implements CinemaHallService {
 
-    @Inject
-    private static CinemHallDao cinemHallDao;
+    @Autowired
+    private CinemaHallDao cinemaHallDao;
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        return cinemHallDao.add(cinemaHall);
+        return cinemaHallDao.add(cinemaHall);
     }
 
     @Override
     public List<CinemaHall> getAll() {
         try {
-            return cinemHallDao.getAll();
+            return cinemaHallDao.getAll();
         } catch (DataProcessingException e) {
             throw new RuntimeException("Cannot show cinema halls from database", e);
         }
     }
+
 }

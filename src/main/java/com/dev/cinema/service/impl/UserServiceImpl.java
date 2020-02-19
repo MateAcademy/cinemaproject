@@ -1,11 +1,13 @@
 package com.dev.cinema.service.impl;
 
 import com.dev.cinema.dao.UserDao;
-import com.dev.cinema.lib.Inject;
-import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.util.HashUtil;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Sergey Klunniy
@@ -13,7 +15,7 @@ import com.dev.cinema.util.HashUtil;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Inject
+    @Autowired
     private UserDao userDao;
 
     @Override
@@ -29,4 +31,10 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return userDao.findByEmail(email);
     }
+
+    @Override
+    public List<User> getUserList() {
+        return userDao.getUserList();
+    }
+
 }
