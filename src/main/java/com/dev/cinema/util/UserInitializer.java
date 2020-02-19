@@ -1,39 +1,44 @@
-package com.dev.cinema;
+package com.dev.cinema.util;
 
 import com.dev.cinema.exceptions.AuthenticationException;
-import com.dev.cinema.lib.Injector;
-import com.dev.cinema.model.CinemaHall;
-import com.dev.cinema.model.Movie;
-import com.dev.cinema.model.MovieSession;
-import com.dev.cinema.model.ShoppingCart;
-import com.dev.cinema.model.User;
-import com.dev.cinema.service.AuthenticationService;
-import com.dev.cinema.service.CinemaHallService;
-import com.dev.cinema.service.MovieService;
-import com.dev.cinema.service.MovieSessionService;
-import com.dev.cinema.service.ShoppingCartService;
+import com.dev.cinema.model.*;
+import com.dev.cinema.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * @author Sergey Klunniy
  */
-public class Main {
+@Component
+public class UserInitializer {
 
-    private static Injector injector = Injector.getInstance("com.dev.cinema");
+    @Autowired
+    private MovieService movieService;
 
-    public static void main(String[] args) throws AuthenticationException {
+    @Autowired
+    private CinemaHallService cinemaHallService;
 
-        MovieService movieService =
-                (MovieService) injector.getInstance(MovieService.class);
+    @Autowired
+    private MovieSessionService movieSessionService;
+
+    @Autowired
+    private AuthenticationService authenticationService;
+
+    @Autowired
+    private ShoppingCartService busketService;
+
+    @PostConstruct
+    public void initUser() {
+
         Movie movie = new Movie();
         movie.setTitle("Family instant");
         movie.setDescription("new film 2020");
         movie = movieService.add(movie);
 
-        CinemaHallService cinemaHallService =
-                (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(50);
         cinemaHall = cinemaHallService.add(cinemaHall);
@@ -44,8 +49,6 @@ public class Main {
         LocalDateTime showTime = LocalDateTime.of(2020, 02, 10, 10, 00);
         movieSession.setShowTime(showTime);
 
-        MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
 
         movieSessionService.findAvailableSessions(1L,
@@ -57,14 +60,14 @@ public class Main {
                 .findAvailableSessions(movie.getId(), showTime.toLocalDate());
         availableSessions.forEach(System.out::println);
 
-        AuthenticationService authenticationService = (AuthenticationService)
-                injector.getInstance(AuthenticationService.class);
         authenticationService.register("sergey@gmail.com", "password");
 
-        User user = authenticationService.login("sergey@gmail.com", "password");
-
-        ShoppingCartService busketService = (ShoppingCartService)
-                injector.getInstance(ShoppingCartService.class);
+        User user = null;
+        try {
+            user = authenticationService.login("sergey@gmail.com", "password");
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        }
 
         MovieSession selectedMovieSession = availableSessions.get(0);
         busketService.addSession(selectedMovieSession, user);

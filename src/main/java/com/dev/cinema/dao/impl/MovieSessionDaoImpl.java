@@ -2,9 +2,8 @@ package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.MovieSessionDao;
 import com.dev.cinema.exceptions.DataProcessingException;
-import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.MovieSession;
-import com.dev.cinema.util.HibernateUtil;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,18 +14,24 @@ import javax.persistence.criteria.Root;
 
 import lombok.NonNull;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Sergey Klunniy
  */
-@Dao
+@Repository
 public class MovieSessionDaoImpl implements MovieSessionDao {
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public MovieSession add(@NonNull MovieSession movieSession) {
         Transaction transaction = null;
-        try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (final Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             Long id = (Long) session.save(movieSession);
             transaction.commit();
@@ -44,7 +49,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(
             @NonNull Long movieId,@NonNull LocalDate showTime)
             throws DataProcessingException {
-        try (final Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (final Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<MovieSession> cq = cb.createQuery(MovieSession.class);
             Root<MovieSession> root = cq.from(MovieSession.class);
