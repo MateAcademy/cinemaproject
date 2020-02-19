@@ -1,19 +1,27 @@
-package com.dev.cinema.util;
+package com.dev.cinema.controller;
 
 import com.dev.cinema.exceptions.AuthenticationException;
-import com.dev.cinema.model.*;
-import com.dev.cinema.service.*;
+import com.dev.cinema.model.CinemaHall;
+import com.dev.cinema.model.Movie;
+import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.ShoppingCart;
+import com.dev.cinema.model.User;
+import com.dev.cinema.service.AuthenticationService;
+import com.dev.cinema.service.CinemaHallService;
+import com.dev.cinema.service.MovieService;
+import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * @author Sergey Klunniy
  */
-@Component
+@RestController
 public class UserInitializer {
 
     @Autowired
@@ -29,9 +37,9 @@ public class UserInitializer {
     private AuthenticationService authenticationService;
 
     @Autowired
-    private ShoppingCartService busketService;
+    private ShoppingCartService shoppingCartService;
 
-    @PostConstruct
+    @GetMapping("/inject")
     public void initUser() {
 
         Movie movie = new Movie();
@@ -41,6 +49,7 @@ public class UserInitializer {
 
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(50);
+//        cinemaHall.setDescription("red");
         cinemaHall = cinemaHallService.add(cinemaHall);
 
         MovieSession movieSession = new MovieSession();
@@ -70,8 +79,8 @@ public class UserInitializer {
         }
 
         MovieSession selectedMovieSession = availableSessions.get(0);
-        busketService.addSession(selectedMovieSession, user);
-        ShoppingCart userBucket = busketService.getByUser(user);
+        shoppingCartService.addSession(selectedMovieSession, user);
+        ShoppingCart userBucket = shoppingCartService.getByUser(user);
         System.out.println(userBucket);
     }
 }

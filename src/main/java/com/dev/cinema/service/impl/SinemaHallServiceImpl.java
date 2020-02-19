@@ -1,6 +1,6 @@
 package com.dev.cinema.service.impl;
 
-import com.dev.cinema.dao.CinemHallDao;
+import com.dev.cinema.dao.CinemaHallDao;
 import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.service.CinemaHallService;
@@ -17,7 +17,7 @@ import java.util.List;
 public class SinemaHallServiceImpl implements CinemaHallService {
 
     @Autowired
-    private static CinemHallDao cinemHallDao;
+    private static CinemaHallDao cinemHallDao;
 
     @Override
     @Transactional
