@@ -37,10 +37,4 @@ public class Order {
     private User user;
 
     private LocalDateTime showTime;
-
-    public Order(List<Ticket> tickets, User user) {
-        this.tickets = tickets;
-        this.user = user;
-        showTime = LocalDateTime.now();
-    }
 }

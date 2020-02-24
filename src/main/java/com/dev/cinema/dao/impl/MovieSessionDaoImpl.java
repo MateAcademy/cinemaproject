@@ -62,4 +62,5 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             throw new DataProcessingException("Cannot show all movie sessions from database", e);
         }
     }
+
 }

@@ -12,7 +12,7 @@ public class MyWebAppInitializer
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{ServletConfig.class};
+        return new Class[]{WebConfig.class};
     }
 
     @Override

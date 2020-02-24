@@ -6,6 +6,7 @@ import com.dev.cinema.model.Movie;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import lombok.NonNull;
 import org.apache.log4j.Logger;
@@ -29,7 +30,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(@NonNull Movie movie) {
         Transaction transaction = null;
-        try (final Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             Long itemId = (Long)session.save(movie);
             transaction.commit();
@@ -46,9 +47,9 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        try (final Session session = sessionFactory.openSession()) {
-            CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
-                    .createQuery(Movie.class);
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Movie> criteriaQuery = criteriaBuilder.createQuery(Movie.class);
             criteriaQuery.from(Movie.class);
             LOGGER.info("we getAll movies");
             return session.createQuery(criteriaQuery).getResultList();
@@ -56,4 +57,15 @@ public class MovieDaoImpl implements MovieDao {
             throw new DataProcessingException("Error retrieving all movies", e);
         }
     }
+
+    @Override
+    public Movie getByIdMovie(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Movie.class, id);
+        } catch (Exception e) {
+            throw new DataProcessingException("Error getById movie", e);
+        }
+    }
+
 }
+

@@ -13,4 +13,6 @@ public interface MovieDao {
     Movie add(Movie movie);
 
     List<Movie> getAll() throws DataProcessingException;
+    
+    Movie getByIdMovie(Long id);
 }

@@ -10,6 +10,7 @@ import java.util.List;
  * @author Sergey Klunniy
  */
 public interface OrderService {
+
     Order completeOrder(List<Ticket> tickets, User user);
 
     List<Order> getOrderHistory(User user);

@@ -8,12 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Sergey Klunniy
  */
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "cinema_hall")
 public class CinemaHall {
 
@@ -27,4 +29,5 @@ public class CinemaHall {
 
     @Column(name = "description")
     private String description;
+
 }

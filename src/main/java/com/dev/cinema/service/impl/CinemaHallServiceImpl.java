@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author Sergey Klunniy
  */
 @Service
-public class SinemaHallServiceImpl implements CinemaHallService {
+public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Autowired
     private CinemaHallDao cinemaHallDao;
@@ -29,6 +29,11 @@ public class SinemaHallServiceImpl implements CinemaHallService {
         } catch (DataProcessingException e) {
             throw new RuntimeException("Cannot show cinema halls from database", e);
         }
+    }
+
+    @Override
+    public CinemaHall getByIdCinemaHall(Long id) {
+        return cinemaHallDao.getByIdCinemaHall(id);
     }
 
 }
