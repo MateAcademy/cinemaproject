@@ -67,4 +67,17 @@ public class UserDaoImpl implements UserDao {
             throw new RuntimeException("Error retrieve all movies", e);
         }
     }
+
+    @Override
+    public User getUserById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<User> cq = cb.createQuery(User.class);
+            Root<User> root = cq.from(User.class);
+            cq.select(root).where(cb.equal(root.get("id"), id));
+            return session.createQuery(cq).uniqueResult();
+        } catch (Exception e) {
+            throw new RuntimeException("Can't find user by id" + e);
+        }
+    }
 }

@@ -13,4 +13,7 @@ public interface CinemaHallDao {
     CinemaHall add(CinemaHall cinemaHall);
 
     List<CinemaHall> getAll() throws DataProcessingException;
+
+    CinemaHall getByIdCinemaHall(Long id);
+
 }

@@ -12,4 +12,6 @@ public interface MovieService {
     Movie add(Movie movie);
 
     List<Movie> getAll();
+
+    Movie getByIdMovie(Long id);
 }

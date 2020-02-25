@@ -44,11 +44,10 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public ShoppingCart getByUser(User user) {
-        try (final Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<ShoppingCart> criteria = builder.createQuery(ShoppingCart.class);
             Root<ShoppingCart> root = criteria.from(ShoppingCart.class);
-
             criteria.select(root);
             criteria.where(builder.equal(root.get("user"), user));
             ShoppingCart shoppingCart = session.createQuery(criteria).uniqueResult();

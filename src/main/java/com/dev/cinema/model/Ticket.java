@@ -34,9 +34,8 @@ public class Ticket {
     @ManyToOne
     private CinemaHall cinemaHall;
 
-    @ManyToOne
-    private User user;
-
     private LocalDateTime showTime;
 
+    @ManyToOne
+    private User user;
 }

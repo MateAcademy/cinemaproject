@@ -1,4 +1,4 @@
-package com.dev.cinema.controller;
+package com.dev.cinema.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,5 +13,4 @@ public class HelloController {
     public String sayHello() {
         return "hello";
     }
-
 }

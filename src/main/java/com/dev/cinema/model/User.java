@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,9 +32,14 @@ public class User {
     @Email(message = "{user.email.invalid}")
     private String email;
 
-    @Column(name = "password")  //@Size(max = 100, min = 3, message = "{user.password.invalid}")
+    @Column(name = "password")
+    @Size(max = 200, min = 3, message = "{user.password.invalid}")
     private String password;
 
     private byte[] salt;
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 }
