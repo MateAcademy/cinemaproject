@@ -42,7 +42,7 @@ public class OrderController {
         return "Order complete success";
     }
 
-    @GetMapping(value = "/getOrderById")
+    @GetMapping(value = "/get-order-byId")
     public List<OrderResponseDto> getOrderById(Long userId) {
         User user = userService.getUserById(userId);
         List<Order> orders = orderService.getOrderHistory(user);

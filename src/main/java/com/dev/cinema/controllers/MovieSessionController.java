@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Sergey Klunniy
  */
 @RestController
-@RequestMapping("/movieSession")
+@RequestMapping("/movie-session")
 public class MovieSessionController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class MovieSessionController {
     @Autowired
     private CinemaHallService cinemaHallService;
 
-    @PostMapping("/addMovieSession")
+    @PostMapping("/add")
     public String addMovieSession(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
         MovieSession movieSession = createMovieSessionFromDto(movieSessionRequestDto);
         movieSessionService.add(movieSession);

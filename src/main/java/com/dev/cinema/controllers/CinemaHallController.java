@@ -4,8 +4,9 @@ import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.dto.CinemaHallRequestDto;
 import com.dev.cinema.model.dto.CinemaHallResponseDto;
 import com.dev.cinema.service.CinemaHallService;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,20 +39,16 @@ public class CinemaHallController {
     }
 
     @GetMapping
-    public String getAllCinemaHall() {
-        List<CinemaHallResponseDto> cinemaHallResponseDto = createListCinemaHallResponseDto();
-        return "All list cinemaHalls: " + cinemaHallResponseDto;
+    public List<CinemaHallResponseDto> getAllCinemaHalls() {
+        return cinemaHallService.getAll().stream()
+                .map(this:: transferCinemaHallToDto)
+                .collect(Collectors.toList());
     }
 
-    private List<CinemaHallResponseDto> createListCinemaHallResponseDto() {
-        List<CinemaHall> allCinemaHalls = cinemaHallService.getAll();
-        List<CinemaHallResponseDto> cinemaHallResponseDto = new ArrayList<>();
-        for (CinemaHall cinemaHall : allCinemaHalls) {
-            CinemaHallResponseDto dto = new CinemaHallResponseDto();
-            dto.setCapacity(cinemaHall.getCapacity());
-            dto.setDescription(cinemaHall.getDescription());
-            cinemaHallResponseDto.add(dto);
-        }
+    private CinemaHallResponseDto transferCinemaHallToDto(CinemaHall cinemaHall) {
+        CinemaHallResponseDto cinemaHallResponseDto = new CinemaHallResponseDto();
+        cinemaHallResponseDto.setCapacity(cinemaHall.getCapacity());
+        cinemaHallResponseDto.setDescription(cinemaHall.getDescription());
         return cinemaHallResponseDto;
     }
 }

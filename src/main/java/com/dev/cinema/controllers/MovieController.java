@@ -23,7 +23,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    @PostMapping("/movies")
+    @PostMapping
     public String addMovie(@RequestBody MovieRequestDto movieRequestDto) {
         Movie movie = createMovieFromDto(movieRequestDto);
         movieService.add(movie);
@@ -37,7 +37,7 @@ public class MovieController {
         return movie;
     }
 
-    @GetMapping("/movies")
+    @GetMapping
     public List<MovieResponceDto> getAllMovies() {
         List<MovieResponceDto> mdto = createListMovieResponceDto();
         return mdto;

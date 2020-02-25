@@ -36,7 +36,7 @@ public class UserController {
         return "Data successfully injected";
     }
 
-    @GetMapping(value = "/")
+    @GetMapping
     public List<UserResponseDto> getAll() {
         List<UserResponseDto> dtos = new ArrayList<>();
         for (User user: userService.getUserList()) {
