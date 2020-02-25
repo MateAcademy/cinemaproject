@@ -1,4 +1,4 @@
-package com.dev.cinema.dto;
+package com.dev.cinema.model.dto;
 
 import lombok.Data;
 
@@ -6,8 +6,6 @@ import lombok.Data;
  * @author Sergey Klunniy
  */
 @Data
-public class UserRequestDto {
+public class UserResponseDto {
     private String email;
-    private String password;
-
 }

@@ -1,4 +1,4 @@
-package com.dev.cinema.dto;
+package com.dev.cinema.model.dto;
 
 import lombok.Data;
 
@@ -6,9 +6,9 @@ import lombok.Data;
  * @author Sergey Klunniy
  */
 @Data
-public class CinemaHallRequestDto {
+public class MovieResponceDto {
 
-    private int capacity;
+    private String title;
 
     private String description;
 }

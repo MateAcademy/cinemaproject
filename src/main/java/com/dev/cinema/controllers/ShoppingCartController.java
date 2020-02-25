@@ -1,8 +1,8 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.dto.MovieSessionRequestDto;
-import com.dev.cinema.dto.ShoppingCartResponseDto;
-import com.dev.cinema.dto.TicketResponseDto;
+import com.dev.cinema.model.dto.MovieSessionRequestDto;
+import com.dev.cinema.model.dto.ShoppingCartResponseDto;
+import com.dev.cinema.model.dto.TicketResponseDto;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
