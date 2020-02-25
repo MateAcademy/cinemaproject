@@ -1,7 +1,8 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.model.dto.UserRequestDto;
+import com.dev.cinema.exceptions.AuthenticationException;
 import com.dev.cinema.model.User;
+import com.dev.cinema.model.dto.UserRequestDto;
 import com.dev.cinema.service.AuthenticationService;
 import com.dev.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,12 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public String login(@RequestBody UserRequestDto requestDt) {
-        User user = userService.findByEmail(requestDt.getEmail());
-        if (user == null) {
+    public String login(@RequestBody UserRequestDto requestDto) {
+        try {
+            authenticationService.login(requestDto.getEmail(),
+                    requestDto.getPassword());
             return "ERROR, this user is not in the database";
-        } else {
+        } catch (AuthenticationException e) {
             return "SUCCESS, this user is present in the database";
         }
     }

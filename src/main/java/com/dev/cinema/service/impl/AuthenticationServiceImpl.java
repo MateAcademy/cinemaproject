@@ -8,7 +8,6 @@ import com.dev.cinema.service.UserService;
 import com.dev.cinema.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Sergey Klunniy
@@ -23,7 +22,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private UserService userService;
 
     @Override
-    @Transactional
     public User login(String email, String password) throws AuthenticationException {
         User user = userService.findByEmail(email);
         if (user != null) {

@@ -7,7 +7,7 @@ public class MyWebAppInitializer
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{DbHibernateConfig.class};
+        return new Class[]{DbHibernateConfig.class, SecurityConfig.class};
     }
 
     @Override

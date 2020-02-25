@@ -1,8 +1,8 @@
 package com.dev.cinema.controllers;
 
+import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.dto.CinemaHallRequestDto;
 import com.dev.cinema.model.dto.CinemaHallResponseDto;
-import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.service.CinemaHallService;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,23 +17,33 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Sergey Klunniy
  */
 @RestController
-@RequestMapping("/cinemaHall")
+@RequestMapping("/cinema-halls")
 public class CinemaHallController {
 
     @Autowired
     private CinemaHallService cinemaHallService;
 
-    @PostMapping("/cinemaHalls")
+    @PostMapping
     public String addCinemaHall(@RequestBody CinemaHallRequestDto cinemaHallRequestDto) {
-        CinemaHall cinemaHall = new CinemaHall();
-        cinemaHall.setDescription(cinemaHallRequestDto.getDescription());
-        cinemaHall.setCapacity(cinemaHallRequestDto.getCapacity());
+        CinemaHall cinemaHall = createCinemaHallFromDto(cinemaHallRequestDto);
         cinemaHallService.add(cinemaHall);
         return "create one cinema-halls: " + cinemaHall;
     }
 
-    @GetMapping("/cinemaHalls")
+    private CinemaHall createCinemaHallFromDto(CinemaHallRequestDto cinemaHallRequestDto) {
+        CinemaHall cinemaHall = new CinemaHall();
+        cinemaHall.setDescription(cinemaHallRequestDto.getDescription());
+        cinemaHall.setCapacity(cinemaHallRequestDto.getCapacity());
+        return cinemaHall;
+    }
+
+    @GetMapping
     public String getAllCinemaHall() {
+        List<CinemaHallResponseDto> cinemaHallResponseDto = createListCinemaHallResponseDto();
+        return "All list cinemaHalls: " + cinemaHallResponseDto;
+    }
+
+    private List<CinemaHallResponseDto> createListCinemaHallResponseDto() {
         List<CinemaHall> allCinemaHalls = cinemaHallService.getAll();
         List<CinemaHallResponseDto> cinemaHallResponseDto = new ArrayList<>();
         for (CinemaHall cinemaHall : allCinemaHalls) {
@@ -42,6 +52,6 @@ public class CinemaHallController {
             dto.setDescription(cinemaHall.getDescription());
             cinemaHallResponseDto.add(dto);
         }
-        return "All list cinemaHalls: " + cinemaHallResponseDto;
+        return cinemaHallResponseDto;
     }
 }

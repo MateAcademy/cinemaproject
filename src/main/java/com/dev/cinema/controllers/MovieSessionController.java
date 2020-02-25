@@ -1,19 +1,17 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.model.dto.MovieSessionRequestDto;
-import com.dev.cinema.model.dto.MovieSessionResponseDto;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.dto.MovieSessionRequestDto;
+import com.dev.cinema.model.dto.MovieSessionResponseDto;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +38,13 @@ public class MovieSessionController {
 
     @PostMapping("/addMovieSession")
     public String addMovieSession(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
+        MovieSession movieSession = createMovieSessionFromDto(movieSessionRequestDto);
+        movieSessionService.add(movieSession);
+        return "We add movie to movieSession: " + movieSession;
+    }
+
+    private MovieSession createMovieSessionFromDto(
+            MovieSessionRequestDto movieSessionRequestDto) {
         Movie movie = movieService.getByIdMovie(movieSessionRequestDto.getMovieId());
         CinemaHall cinemaHall = cinemaHallService
                 .getByIdCinemaHall(movieSessionRequestDto.getCinemaHallId());
@@ -47,14 +52,12 @@ public class MovieSessionController {
         movieSession.setMovie(movie);
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setShowTime(LocalDateTime.parse(movieSessionRequestDto.getShowTime()));
-        movieSessionService.add(movieSession);
-        return "We add movie to movieSession: " + movieSession;
+        return movieSession;
     }
 
     @GetMapping("/available")
     public List<MovieSessionResponseDto> getAllMovieSessions(@RequestParam Long movieId,
                                                              @RequestParam String showTime) {
-
         return movieSessionService.findAvailableSessions(movieId, LocalDate.parse(showTime))
                 .stream()
                 .map(this::getMovieSessionResponseDto)

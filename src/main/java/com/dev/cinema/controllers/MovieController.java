@@ -1,8 +1,8 @@
 package com.dev.cinema.controllers;
 
+import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.dto.MovieRequestDto;
 import com.dev.cinema.model.dto.MovieResponceDto;
-import com.dev.cinema.model.Movie;
 import com.dev.cinema.service.MovieService;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +25,25 @@ public class MovieController {
 
     @PostMapping("/movies")
     public String addMovie(@RequestBody MovieRequestDto movieRequestDto) {
-        Movie movie = new Movie();
-        movie.setTitle(movieRequestDto.getTitle());
-        movie.setDescription(movieRequestDto.getDescription());
+        Movie movie = createMovieFromDto(movieRequestDto);
         movieService.add(movie);
         return "Data successfully injected" + movie;
     }
 
+    private Movie createMovieFromDto(MovieRequestDto movieRequestDto) {
+        Movie movie = new Movie();
+        movie.setTitle(movieRequestDto.getTitle());
+        movie.setDescription(movieRequestDto.getDescription());
+        return movie;
+    }
+
     @GetMapping("/movies")
     public List<MovieResponceDto> getAllMovies() {
+        List<MovieResponceDto> mdto = createListMovieResponceDto();
+        return mdto;
+    }
+
+    private List<MovieResponceDto> createListMovieResponceDto() {
         List<Movie> allMovies = movieService.getAll();
         List<MovieResponceDto> mdto = new ArrayList<>();
         for (Movie movie : allMovies) {

@@ -1,17 +1,15 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.model.dto.OrderRequestDto;
-import com.dev.cinema.model.dto.OrderResponseDto;
 import com.dev.cinema.model.Order;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
+import com.dev.cinema.model.dto.OrderRequestDto;
+import com.dev.cinema.model.dto.OrderResponseDto;
 import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,8 +1,8 @@
 package com.dev.cinema.controllers;
 
+import com.dev.cinema.model.User;
 import com.dev.cinema.model.dto.UserRequestDto;
 import com.dev.cinema.model.dto.UserResponseDto;
-import com.dev.cinema.model.User;
 import com.dev.cinema.service.AuthenticationService;
 import com.dev.cinema.service.UserService;
 import java.util.ArrayList;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -37,7 +36,7 @@ public class UserController {
         return "Data successfully injected";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "/")
     public List<UserResponseDto> getAll() {
         List<UserResponseDto> dtos = new ArrayList<>();
         for (User user: userService.getUserList()) {
@@ -48,12 +47,12 @@ public class UserController {
         return dtos;
     }
 
-    @PostMapping(value = "/")
+    @PostMapping
     public void create(@RequestBody UserRequestDto requestDto) {
         authenticationService.register(requestDto.getEmail(), requestDto.getPassword());
     }
 
-    @GetMapping(value = "/byEmail")
+    @GetMapping(value = "/email")
     public UserResponseDto getUserByEmail(String email) {
         User user = userService.findByEmail(email);
         UserResponseDto userResponseDto = new UserResponseDto();

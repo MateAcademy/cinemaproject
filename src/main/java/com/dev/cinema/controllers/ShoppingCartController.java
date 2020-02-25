@@ -1,12 +1,12 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.model.dto.MovieSessionRequestDto;
-import com.dev.cinema.model.dto.ShoppingCartResponseDto;
-import com.dev.cinema.model.dto.TicketResponseDto;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
+import com.dev.cinema.model.dto.MovieSessionRequestDto;
+import com.dev.cinema.model.dto.ShoppingCartResponseDto;
+import com.dev.cinema.model.dto.TicketResponseDto;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.ShoppingCartService;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Sergey Klunniy
  */
 @RestController
-@RequestMapping("/shoppingCarts")
+@RequestMapping("/shopping-carts")
 public class ShoppingCartController {
 
     @Autowired
@@ -40,19 +40,25 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    @PostMapping("/addMovieSession")
+    @PostMapping("/add-movie-session")
     public void addMovieSession(@RequestBody MovieSessionRequestDto movieSessionRequestDto,
                                 @RequestParam Long userId) {
+        MovieSession movieSession = createMovieSessionFromDto(movieSessionRequestDto);
+        User user = userService.getUserById(userId);
+        shoppingCartService.addSession(movieSession, user);
+    }
+
+    private MovieSession createMovieSessionFromDto(
+            MovieSessionRequestDto movieSessionRequestDto) {
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(movieService.getByIdMovie(movieSessionRequestDto.getMovieId()));
         movieSession.setCinemaHall(cinemaHallService.getByIdCinemaHall(movieSessionRequestDto
                 .getCinemaHallId()));
         movieSession.setShowTime(LocalDateTime.parse(movieSessionRequestDto.getShowTime()));
-        User user = userService.getUserById(userId);
-        shoppingCartService.addSession(movieSession, user);
+        return movieSession;
     }
 
-    @GetMapping("/getByUserId")
+    @GetMapping("/by-userId")
     public ShoppingCartResponseDto getByUserId(@RequestParam Long userId) {
         return transformToShoppingCartResponseDto(
                 shoppingCartService.getByUser(userService.getUserById(userId)));
