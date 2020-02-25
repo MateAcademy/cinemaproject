@@ -51,4 +51,5 @@ public class CinemaHallController {
         cinemaHallResponseDto.setDescription(cinemaHall.getDescription());
         return cinemaHallResponseDto;
     }
+
 }
