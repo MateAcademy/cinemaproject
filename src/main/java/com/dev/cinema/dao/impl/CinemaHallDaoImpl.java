@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class CinemaHallDaoImpl implements CinemaHallDao {
-
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -58,5 +57,4 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             throw new DataProcessingException("Error getById cinemaHall", e);
         }
     }
-
 }
