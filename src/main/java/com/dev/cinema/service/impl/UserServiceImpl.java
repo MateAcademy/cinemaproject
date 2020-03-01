@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
         byte[] solt = HashUtil.getSalt();
         user.setSalt(solt);
         user.setPassword(HashUtil.hashPassword(user.getPassword(), solt));
-
         return userDao.add(user);
     }
 

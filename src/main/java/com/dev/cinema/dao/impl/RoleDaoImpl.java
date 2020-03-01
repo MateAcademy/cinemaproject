@@ -3,15 +3,13 @@ package com.dev.cinema.dao.impl;
 import com.dev.cinema.dao.RoleDao;
 import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.Role;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Sergey Klunniy

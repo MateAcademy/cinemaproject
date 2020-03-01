@@ -3,6 +3,7 @@ package com.dev.cinema.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,41 +18,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter  {
-    private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authBuilder) throws Exception {
-//        authBuilder.inMemoryAuthentication()
-//                .passwordEncoder(getEncoder())
-//                .withUser("ava")
-//                .password(getEncoder().encode("1234")).roles("ADMIN")
-//                .and()
-//                .withUser("bob")
-//                .password(getEncoder().encode("1234")).roles("USER");
-
         authBuilder.userDetailsService(userDetailsService)
                 .passwordEncoder(getEncoder());
     }
 
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                .permitAll()
-//                .and()
-//                .httpBasic()
-//                .and()
-//                .csrf().disable();
         httpSecurity
                 .csrf()
                 .disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST,"/user/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/user/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/cinema-halls/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

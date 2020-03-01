@@ -12,10 +12,12 @@ import static org.hibernate.cfg.AvailableSettings.PASS;
 import static org.hibernate.cfg.AvailableSettings.SHOW_SQL;
 import static org.hibernate.cfg.AvailableSettings.URL;
 import static org.hibernate.cfg.AvailableSettings.USER;
+
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.model.Order;
+import com.dev.cinema.model.Role;
 import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
@@ -65,7 +67,7 @@ public class DbHibernateConfig {
 
         factoryBean.setHibernateProperties(properties);
         factoryBean.setAnnotatedClasses(User.class, Ticket.class, ShoppingCart.class,
-                Order.class, MovieSession.class, Movie.class, CinemaHall.class);
+                Order.class, MovieSession.class, Movie.class, CinemaHall.class, Role.class);
         return factoryBean;
     }
 
