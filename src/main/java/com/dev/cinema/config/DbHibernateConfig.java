@@ -17,12 +17,11 @@ import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.model.Order;
+import com.dev.cinema.model.Role;
 import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
-
 import java.util.Properties;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -39,10 +38,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan({
         "com.dev.cinema.dao.impl",
         "com.dev.cinema.service.impl",
-        "com.dev.cinema.util"
+        "com.dev.cinema.util",
+        "com.dev.cinema.security",
 })
 public class DbHibernateConfig {
-
     @Autowired
     private Environment env;
 
@@ -68,7 +67,7 @@ public class DbHibernateConfig {
 
         factoryBean.setHibernateProperties(properties);
         factoryBean.setAnnotatedClasses(User.class, Ticket.class, ShoppingCart.class,
-                Order.class, MovieSession.class, Movie.class, CinemaHall.class);
+                Order.class, MovieSession.class, Movie.class, CinemaHall.class, Role.class);
         return factoryBean;
     }
 
