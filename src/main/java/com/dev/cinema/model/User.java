@@ -38,12 +38,15 @@ public class User  {
 
     @Column(name = "roles")
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles =  new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     private byte[] salt;
 
-    public User(String email, String password) {
+    public User(@Email(message = "{user.email.invalid}") String email,
+                @Size(max = 200, min = 3, message = "{user.password.invalid}")
+                        String password, Set<Role> roles) {
         this.email = email;
         this.password = password;
+        this.roles = roles;
     }
 }

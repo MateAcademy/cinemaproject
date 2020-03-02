@@ -17,7 +17,7 @@ import javax.validation.Payload;
 @Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EmailConstraint {
-    String message() default "{value.negative}";
+    String message() default "{value.negative.whenUserLogin}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -36,7 +36,7 @@ public class RoleDaoImpl implements RoleDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("can't add role to db", e);
+            throw new DataProcessingException("can't add role to db", e);
         }
     }
 
